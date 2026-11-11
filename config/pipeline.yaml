@@ -1,0 +1,96 @@
+# AHSI 主配置 —— 仓库默认模板（不含任何本机绝对路径）
+#
+# 使用方法：
+#   1) 复制 config/pipeline.local.yaml.example 为 config/pipeline.local.yaml 并填写本机路径；
+#      config/*local* 已被 .gitignore 排除，不会进版本库。
+#   2) 所有命令都可用 --config 指定配置文件，例如：
+#      python scripts/run_ahsi.py --config config/pipeline.local.yaml plan
+#   3) 相对路径相对于 project_root 解析；也支持 ${ENV:变量名} 展开，
+#      未设置对应环境变量时 load_config 会直接报错，不会静默使用错误路径。
+version: 1
+
+# ".." = 配置文件所在目录的上一级，即仓库根目录
+project_root: ".."
+input_root: "data/l1"
+output_root: "outputs"
+auxiliary_root: "auxiliary"
+# golden 参照只对作者验证过的两景产品有效。换数据后 verify 自动记 SKIP，
+# 不算失败、不伪造通过，也不参与生产流程。
+golden_root: "golden"
+
+grid:
+  # auto_utm=true 时按每景 XML 中心经纬度自动推导 UTM 带；
+  # 此处 CRS 仅作为校验基准 / 中心经纬度缺失时的回退值。
+  crs: "EPSG:32650"
+  resolution_m: 30
+  nodata: -9999.0
+  resampling: bilinear
+  # 两个辅助栅格需自行准备并放在 auxiliary_root 下：
+  #   rpc_dem   椭球高 DSM（米制投影，GDAL RPC_DEM 需要）
+  #   geoid_grid EGM2008 大地水准面网格（EPSG:4326）
+  rpc_dem: "rpc_dem_ellipsoid.tif"
+  geoid_grid: "egm08_25.tif"
+  apply_vdatum_shift: true
+  auto_utm: true
+
+bands:
+  wavelength_min_nm: 420
+  wavelength_max_nm: 2400
+  water_absorption_nm:
+    - [755, 775]
+    - [930, 980]
+    - [1350, 1460]
+    - [1800, 1980]
+  vnir_max_nm: 1000
+  swir_min_nm: 1030
+  keep_all_bands_in_radiance: true
+
+# 大气/辐射归一化后端。默认 iarr = 纯 Python，零外部软件依赖。
+#   none       只交付辐亮度立方体
+#   iarr       逐波段除以场景稳健均值，输出"相对反射率"（不是地表反射率）
+#   sixs_lut   本机 6SV/Py6S 查表，输出假设大气下的模型估计地表反射率
+#   envi_quac  调用 ENVI QUAC 任务引擎（需商业许可）
+# 各后端的文件名、GeoTIFF tag、ENVI bbl、QC 检查项与结论边界互相独立。
+atmospheric:
+  enabled: true
+  method: iarr
+  on_unavailable: "stop_at_radiance"
+
+  iarr:
+    normalization: scene_mean
+    robust_pct: [2, 98]
+    min_valid_pixels: 1000
+    require_positive_radiance: true
+
+  # 留空即表示本机不装 ENVI，detect() 会判定后端不可用。
+  envi_taskengine: ""
+  sensor: "Generic / Unknown Sensor"
+  license_timeout_s: 20
+  timeout_s: 900
+  reflectance_scale: 10000
+  accept_nonzero_exit_with_valid_output: true
+
+# 可选的场景资产适配层（scripts/build_scene_asset.py 与 prepare_rpc_dem.py 使用）。
+# 具体键见 config/scene_assets.example.yaml。留空不影响主流水线。
+scene_assets: {}
+
+qc:
+  min_joint_coverage_km2: 100
+  max_rpc_roundtrip_pixels: 1.0
+  max_ogp_solar_zenith_diff_deg: 0.5
+  require_wavelength_monotonic: true
+  require_complete_readback: true
+  max_fraction_above_1: 0.10
+  max_fraction_above_2: 0.02
+  fail_on: []
+
+runtime:
+  band_chunk: 8
+  compression: deflate
+  compress_level: 4
+  tiled: true
+  block_size: 256
+  min_free_gb: 40
+  hash_inputs: false
+  keep_intermediates: true
+  log_level: INFO

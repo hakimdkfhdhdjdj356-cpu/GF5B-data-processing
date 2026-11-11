@@ -1,0 +1,28 @@
+# 可选的场景资产适配层配置示例。
+# 供 scripts/prepare_rpc_dem.py 与 scripts/build_scene_asset.py 使用，
+# 通过 --asset-config 传入，或放在与主配置同目录的 scene_assets.yaml。
+# 所有路径相对于 project_root；本文件不含任何真实数据路径。
+#
+# 说明：build_scene_asset.py 是"示例适配器"，它会读取 ENVI QUAC 阶段的产物，
+# 并与自备的 EMIT / ASTER / Sentinel-2 参考数据做交叉比较。若你只用 iarr 或
+# sixs_lut 后端，或没有这些参考数据，可完全不用这两个脚本。
+
+# prepare_rpc_dem.py：椭球高 DSM 与 EGM2008 网格
+dem: "reference/local_dsm_egm2008.tif"
+geoid: "reference/egm08_25.tif"
+
+# build_scene_asset.py
+aoi: "reference/aoi.geojson"
+project_crs: "EPSG:32648"
+emit_reflectance: "reference/emit_l2a_rfl.tif"
+emit_qa: "reference/emit_l2a_mask.tif"
+emit_metadata: "reference/emit_l2a_metadata.json"
+emit_v02_bands: "reference/emit_v02_band_list.csv"
+aster_native_dir: "reference/aster_native"
+aster_metadata: "reference/aster_metadata.json"
+sentinel2: "reference/sentinel2_rgb.tif"
+aster_bands_nm:
+  b4: [1600, 1700]
+  b5: [2145, 2185]
+  b6: [2185, 2225]
+  b8: [2295, 2365]

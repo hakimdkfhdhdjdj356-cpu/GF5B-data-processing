@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "ahsi-pipeline: a configuration-driven L1 preprocessing base for spaceborne hyperspectral AHSI data"
+abstract: >-
+  Engineering base for radiometric calibration, RPC + DEM orthorectification,
+  interchangeable atmospheric/normalisation backends, band screening, unified
+  quality gating and optional SCS+C terrain illumination correction of Chinese
+  spaceborne hyperspectral L1 products.
+authors:
+  - name: "ahsi-pipeline contributors"
+version: 2.0.0
+date-released: 2026-11-11
+license: MIT
+repository-code: "https://github.com/hakimdkfhdhdjdj356-cpu/ahsi-pipeline"
+keywords:
+  - hyperspectral
+  - remote sensing
+  - AHSI
+  - GF-5B
+  - radiometric calibration
+  - atmospheric correction

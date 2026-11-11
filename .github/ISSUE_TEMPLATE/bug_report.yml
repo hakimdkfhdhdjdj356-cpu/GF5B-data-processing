@@ -1,0 +1,77 @@
+name: "\U0001F41B Bug 报告"
+description: 报告流水线运行错误、数值异常或产品等级标注错误
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请**不要**在 Issue 中粘贴凭据、本机绝对路径、原始影像或含坐标的成果数据；
+        如需提供大文件，请先脱敏或只给相关片段。
+  - type: input
+    id: version
+    attributes:
+      label: 版本 / commit
+      description: 例如 `2.0.0` 或 `git rev-parse --short HEAD` 的结果
+      placeholder: "2.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: backend
+    attributes:
+      label: 使用的大气/归一化后端
+      options:
+        - iarr（默认）
+        - sixs_lut
+        - envi_quac
+        - none
+        - 尚未运行到该阶段
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: 出问题的阶段
+      options:
+        - preflight / plan
+        - radiance
+        - envi / quac
+        - reflectance
+        - qc
+        - terrain（独立阶段）
+        - spectral chain（独立阶段）
+        - 其它
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 实际发生了什么
+      description: 请贴出完整报错堆栈或错误结论，并说明期望结果
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 使用的命令（去掉路径中的敏感部分）、配置文件的关键字段、run_id
+      placeholder: |
+        1. python scripts/run_ahsi.py --config ... plan
+        2. python scripts/run_ahsi.py --config ... run --run-id ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: qc
+    attributes:
+      label: QC 报告片段（可选）
+      description: `qc_report.md` 或 `qc_checks.json` 中相关检查项的 id 与结果
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 确认
+      options:
+        - label: 我已确认 Issue 中不含凭据、本机绝对路径或原始数据
+          required: true
+        - label: 我已搜索现有 Issue，确认不是重复报告
+          required: true

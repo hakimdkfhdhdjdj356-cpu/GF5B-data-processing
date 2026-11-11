@@ -1,0 +1,8 @@
+# 统一换行符，避免 Windows / Linux 检出差异影响可复现性
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.tif binary
+*.tiff binary
+*.zip binary

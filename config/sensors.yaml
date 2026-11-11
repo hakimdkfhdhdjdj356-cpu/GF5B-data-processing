@@ -1,0 +1,55 @@
+# 传感器/产品文件适配规则。新增传感器只改此文件，不改代码。
+# 匹配规则：glob 用于文件名；keywords 表示文件名(小写)必须同时包含所有关键词。
+
+file_patterns:
+  metadata: ["*.xml"]
+  footprint: ["*.shp"]
+  ogp: ["*_OGP.tif", "*_OGP.tiff"]
+  vn_image: ["*_VN.tif", "*_VN.tiff"]
+  sw_image: ["*_SW.tif", "*_SW.tiff"]
+  vn_rpc: ["*_VN.rpb"]
+  sw_rpc: ["*_SW.rpb"]
+  radcal_vnir_keywords: ["radcal", "vnir"]
+  radcal_swir_keywords: ["radcal", "swir"]
+  spectral_vnir_keywords: ["spectralresponse", "vnir"]
+  spectral_swir_keywords: ["spectralresponse", "swir"]
+
+# 两套产品 XML 字段名不同，在此统一别名；取第一个存在的字段。
+meta_aliases:
+  satellite: ["SatelliteID"]
+  sensor: ["SensorID"]
+  product_id: ["ProductID"]
+  product_level: ["ProductLevel", "Level"]
+  bands_count: ["BandsCount"]
+  cloud_percent: ["CloudCover", "CloudPercent"]
+  solar_zenith: ["SolarZenith"]
+  solar_azimuth: ["SolarAzimuth"]
+  start_time: ["StartTime"]
+  end_time: ["EndTime"]
+  center_lat: ["CenterLatitude"]
+  center_lon: ["CenterLongitude"]
+  gsd_m: ["ImageGSD"]
+  sun_earth_distance: ["SunEarthDistance"]
+  ogp_scale_factor: ["OGPScaleFactor", "AngleScaleFactor"]
+
+# OGP.tif 四个 int32 波段 = 逐像元观测几何(× scale)。由 XML 中心角核对确认。
+ogp_band_order: ["solar_zenith_deg", "solar_azimuth_deg", "satellite_zenith_deg", "satellite_azimuth_deg"]
+
+calibration:
+  formula: "L = DN * gain + offset"
+  units: "W m-2 sr-1 um-1"
+  # 定标表两列：gain, offset。GF5B 用逗号分隔，ZY1E 用空格分隔，解析时统一兼容。
+  # 不额外乘 GainMode / IntegrationTime —— 产品系数已包含。
+
+# 只做完整性校验用的期望值；不用于强行改写数据。新增传感器请补一条或删除该传感器键。
+known_sensors:
+  GF5B:
+    vnir_bands: 150
+    swir_bands: 180
+    total_bands: 330
+    product_level: "LEVEL1"
+  ZY1E:
+    vnir_bands: 76
+    swir_bands: 90
+    total_bands: 166
+    product_level: "LEVEL1A"

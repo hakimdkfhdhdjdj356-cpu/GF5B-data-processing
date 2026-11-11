@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "\U0001F512 报告安全问题"
+    url: "https://github.com/hakimdkfhdhdjdj356-cpu/ahsi-pipeline/security/advisories/new"
+    about: 请使用私密漏洞报告渠道，不要开公开 Issue。
+  - name: "\U0001F4D6 阅读文档与结论边界"
+    url: "https://github.com/hakimdkfhdhdjdj356-cpu/ahsi-pipeline#readme"
+    about: 使用前请先确认所用后端的产品等级与已知限制。

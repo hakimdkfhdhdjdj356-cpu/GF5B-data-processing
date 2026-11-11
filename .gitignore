@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+
+# 本机配置与凭据（绝不入库）
+.env
+.env.*
+.pat
+*token*.txt
+config/*.local.yaml
+config/*.local.yml
+config/scene_assets.yaml
+
+# 影像数据、辅助栅格与运行产物（体积大且不属于代码）
+data/
+outputs/
+auxiliary/
+golden/
+runs/
+*.tif
+*.tiff
+*.TIF
+*.TIFF
+*.dat
+*.img
+*.hdr
+*.rpb
+*.raw
+*.vrt
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.aux.xml
+*.nc
+*.h5
+*.hdf
+*.zip
+*.7z
+*.tar
+*.gz
+
+# 例外：CI / 文档需要的小文件不受上面通配影响
+!docs/**/*.png

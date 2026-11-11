@@ -1,0 +1,13 @@
+# 与 pyproject.toml 的 dependencies 保持一致；CI 用 pip install -e .
+numpy>=1.24
+rasterio>=1.3
+PyYAML>=6.0
+scipy>=1.10
+matplotlib>=3.7
+Pillow>=9.5
+fiona>=1.9
+shapely>=2.0
+pandas>=2.0
+
+# 可选：仅在使用 sixs_lut 后端时需要，且还需本机 6S V1.1 可执行文件。
+# Py6S>=1.9
