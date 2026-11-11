@@ -15,8 +15,8 @@ if sys_path not in sys.path:
 from ahsi.config import load_config  # noqa: E402
 from ahsi.scene import discover_scenes, numeric_table  # noqa: E402
 
-# Golden 回归依赖用户自备的 L1 场景数据。公开仓库/CI 中没有这些数据时整类跳过，
-# 不伪造通过；本地配置了 input_root 且存在 XML 时仍会完整执行。
+# Golden 回归依赖用户自备的 L1 场景数据。公开仓库/CI 中没有这些数据时整类跳过；
+# 本地配置了 input_root 且存在 XML 时仍会完整执行。
 _CFG = load_config(ROOT / "config" / "pipeline.yaml")
 _INPUT_ROOT = Path(_CFG["input_root"])
 HAS_SCENE_DATA = _INPUT_ROOT.is_dir() and any(_INPUT_ROOT.glob("*.xml"))

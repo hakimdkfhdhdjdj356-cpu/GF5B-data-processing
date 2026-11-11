@@ -3,13 +3,13 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ahsi-pipeline"
+name = "gf5b-data-processing"
 version = "2.0.0"
-description = "Configuration-driven L1 preprocessing pipeline for Chinese spaceborne hyperspectral (AHSI) data"
+description = "Configuration-driven L1 preprocessing pipeline for GF-5B AHSI hyperspectral data"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "ahsi-pipeline contributors" }]
+authors = [{ name = "GF5B-data-processing contributors" }]
 keywords = ["hyperspectral", "remote-sensing", "AHSI", "GF-5B", "radiometric-calibration", "atmospheric-correction"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -42,8 +42,8 @@ dev = ["build>=1.0", "twine>=4.0"]
 ahsi = "ahsi.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/hakimdkfhdhdjdj356-cpu/ahsi-pipeline"
-Issues = "https://github.com/hakimdkfhdhdjdj356-cpu/ahsi-pipeline/issues"
+Homepage = "https://github.com/hakimdkfhdhdjdj356-cpu/GF5B-data-processing"
+Issues = "https://github.com/hakimdkfhdhdjdj356-cpu/GF5B-data-processing/issues"
 
 [tool.setuptools]
 packages = ["ahsi"]

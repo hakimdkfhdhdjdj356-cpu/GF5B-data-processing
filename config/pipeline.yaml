@@ -14,8 +14,7 @@ project_root: ".."
 input_root: "data/l1"
 output_root: "outputs"
 auxiliary_root: "auxiliary"
-# golden 参照只对作者验证过的两景产品有效。换数据后 verify 自动记 SKIP，
-# 不算失败、不伪造通过，也不参与生产流程。
+# golden 参照只对验证过的两景产品有效。换数据后 verify 自动记 SKIP，不参与生产流程。
 golden_root: "golden"
 
 grid:
@@ -50,7 +49,7 @@ bands:
 #   iarr       逐波段除以场景稳健均值，输出"相对反射率"（不是地表反射率）
 #   sixs_lut   本机 6SV/Py6S 查表，输出假设大气下的模型估计地表反射率
 #   envi_quac  调用 ENVI QUAC 任务引擎（需商业许可）
-# 各后端的文件名、GeoTIFF tag、ENVI bbl、QC 检查项与结论边界互相独立。
+# 各后端的文件名、GeoTIFF tag、ENVI bbl 与 QC 检查项互相独立。
 atmospheric:
   enabled: true
   method: iarr

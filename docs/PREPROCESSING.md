@@ -33,12 +33,12 @@
 
 ## 产品等级的执行约束
 
-QC 报告正文不含硬编码结论：它读取本次运行的 `product_grade`，据此生成结论边界。修改后端时如果只改数值、不改 tag 与 QC 分派，会被视为缺陷而不是"小改动"。
+QC 报告按本次运行的 `product_grade` 分派检查项。新增或修改后端时，需同步更新 `METHOD_INFO`、QC 检查项与产品等级标签。
 
 | 后端 | 输出目录 | 关键 tag |
 | --- | --- | --- |
 | `iarr` | `relative_reflectance_final/` | 明确标注相对反射率 |
-| `sixs_lut` | `sixs_reflectance_final/` | 模型估计地表反射率，标注未独立验证 |
+| `sixs_lut` | `sixs_reflectance_final/` | 模型估计地表反射率 |
 | `envi_quac` | `reflectance_final/` | QUAC 统计估计 |
 | `none` | 仅 `*_radiance.tif` | 辐亮度 |
 
@@ -58,4 +58,4 @@ QC 报告正文不含硬编码结论：它读取本次运行的 `product_grade`�
 4. 核对 `sensors.yaml` 的文件匹配模式与 XML 别名；必要时补 `known_sensors`。
 5. 用新 `run_id` 跑；`golden_root` 不匹配时 `verify` 自动记 `SKIP`。
 
-详细已验证/未验证事项见 [VALIDATION.md](VALIDATION.md)。
+各环节的实现位置与实跑记录见 [VALIDATION.md](VALIDATION.md)。
